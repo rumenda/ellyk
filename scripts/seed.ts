@@ -348,7 +348,7 @@ async function main() {
   }
   // Unmatched payments for the reconciliation queue
   await mpesa("ELLYK", 1500, at(dayOffset(-1), "18:42"), "+254700199001", "WILSON");
-  await mpesa("EK1O0O4", 1500, at(today, "07:55"), "+254700199002", "AGNES");
+  await mpesa("EK1O0O4", 1500, at(dayOffset(-1), "07:55"), "+254700199002", "AGNES");
   const unmatchedForMatch = await mpesa("FEES", 2000, at(dayOffset(-2), "12:10"), "+254700199003", "PETER") as { payment_id: string };
 
   // Accountant reconciles one unmatched payment to Martin (who said he forgot his account number)
@@ -364,7 +364,7 @@ async function main() {
   must(await acct.rpc("verify_payment", { p_payment: cashId, p_approve: true, p_note: "Counted and banked" }), "verify");
   if (behind[1]) {
     must(await adminC.rpc("record_manual_payment", { p_student: behind[1].id, p_amount: 1500, p_source: "cash",
-      p_reference: "Cash book p.43", p_received_at: at(today, "09:20").toISOString(), p_notes: "Partial instalment" }), "cash2");
+      p_reference: "Cash book p.43", p_received_at: at(dayOffset(-1), "09:20").toISOString(), p_notes: "Partial instalment" }), "cash2");
   }
 
   // ------------------------------------------------- sessions, bookings, attendance
