@@ -1,26 +1,133 @@
 @import "tailwindcss";
 
+/*
+ * Elly K design tokens. Change the brand in one place: every component reads
+ * these variables. Palette: road-safety teal (trust, calm) with signal amber
+ * for highlights; neutral slate for text and surfaces. AA-contrast checked.
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --brand-50: #effaf8;
+  --brand-100: #d5f2ec;
+  --brand-200: #aee4da;
+  --brand-500: #14907e;
+  --brand-600: #0e7566;
+  --brand-700: #0c5e53;
+  --brand-800: #0b4b43;
+  --brand-900: #093d37;
+
+  --accent-100: #fff3d1;
+  --accent-400: #fbbf24;
+  --accent-500: #f59e0b;
+  --accent-700: #a15c07;
+
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --surface-muted: #f1f3f6;
+  --border: #e3e7ec;
+  --border-strong: #cdd3db;
+  --text: #121a24;
+  --text-muted: #556274;
+  --text-subtle: #6f7b8b;
+
+  --success-50: #ecfdf3; --success-600: #15803d; --success-700: #166534;
+  --warning-50: #fffaeb; --warning-600: #b45309; --warning-700: #92400e;
+  --danger-50: #fef2f2;  --danger-600: #dc2626;  --danger-700: #b91c1c;
+  --info-50: #eff6ff;    --info-600: #2563eb;    --info-700: #1d4ed8;
+
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 14px;
+  --shadow-sm: 0 1px 2px rgb(16 24 40 / 0.06);
+  --shadow: 0 1px 3px rgb(16 24 40 / 0.08), 0 1px 2px rgb(16 24 40 / 0.04);
+  --shadow-lg: 0 12px 32px -8px rgb(16 24 40 / 0.18);
+  --focus: 0 0 0 3px rgb(20 144 126 / 0.35);
+
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-brand-50: var(--brand-50);
+  --color-brand-100: var(--brand-100);
+  --color-brand-200: var(--brand-200);
+  --color-brand-500: var(--brand-500);
+  --color-brand-600: var(--brand-600);
+  --color-brand-700: var(--brand-700);
+  --color-brand-800: var(--brand-800);
+  --color-brand-900: var(--brand-900);
+  --color-accent-100: var(--accent-100);
+  --color-accent-400: var(--accent-400);
+  --color-accent-500: var(--accent-500);
+  --color-accent-700: var(--accent-700);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-text: var(--text);
+  --color-muted: var(--text-muted);
+  --color-subtle: var(--text-subtle);
+  --color-success-50: var(--success-50);
+  --color-success-600: var(--success-600);
+  --color-success-700: var(--success-700);
+  --color-warning-50: var(--warning-50);
+  --color-warning-600: var(--warning-600);
+  --color-warning-700: var(--warning-700);
+  --color-danger-50: var(--danger-50);
+  --color-danger-600: var(--danger-600);
+  --color-danger-700: var(--danger-700);
+  --color-info-50: var(--info-50);
+  --color-info-600: var(--info-600);
+  --color-info-700: var(--info-700);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius);
+  --radius-lg: var(--radius-lg);
+  --shadow-card: var(--shadow);
+  --shadow-pop: var(--shadow-lg);
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-feature-settings: "tnum" 0;
+  line-height: 1.5;
+  text-rendering: optimizeLegibility;
+}
+
+/* Tabular figures for money so columns align */
+.tabular { font-variant-numeric: tabular-nums; }
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus);
+  border-radius: var(--radius-sm);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg, var(--surface-muted) 0, #e8ebef 40px, var(--surface-muted) 80px);
+  background-size: 800px 100%;
+  animation: shimmer 1.4s infinite linear;
+  border-radius: var(--radius-sm);
+}
+
+.pb-safe { padding-bottom: calc(var(--safe-bottom) + 0.5rem); }
+
+@media print {
+  .no-print { display: none !important; }
+  body { background: white; }
 }
